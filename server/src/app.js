@@ -1,20 +1,35 @@
 const express = require('express');
-const app = express();
-const PORT = 5001;
-
-// Enable CORS for Express
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:5173' }));
-
-// Socket.IO setup
 const http = require('http');
-const server = http.createServer(app);
 const { Server } = require('socket.io');
-const socketIO = new Server(server, {
-  cors: {
-    origin: 'http://localhost:5173',
-  },
-});
+const dotenv = require('dotenv');
+dotenv.config();
+
+const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error');
+const socketHandlers = require('./sockets/index');
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: 'http://localhost:5173' } });
+app.set('io', io);
+const PORT = process.env.PORT || 5001;
+
+// DB
+connectDB();
+
+// Middleware
+app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/workspaces', require('./routes/workspaceRoutes'));
+app.use('/api/boards', require('./routes/boardRoutes'));
+app.use('/api/lists', require('./routes/listRoutes'));
+app.use('/api/cards', require('./routes/cardRoutes'));
+app.use('/api/comments', require('./routes/commentRoutes'));
+app.use('/api/activity', require('./routes/activityRoutes'));
 
 const UID = () => Math.random().toString(36).substring(2, 10);
 
@@ -68,41 +83,11 @@ app.get('/api', (req, res) => {
   res.json(tasks);
 });
 
-// Socket.IO connection and task drag handler
-socketIO.on('connection', (socket) => {
-  console.log('A client connected:', socket.id);
+// Socket.IO handlers
+socketHandlers(io);
 
-  socket.on('taskDragged', ({ source, destination }) => {
-    // Validate source and destination
-    if (!tasks[source.droppableId] || !tasks[destination.droppableId]) {
-      console.error('Invalid source or destination column');
-      return;
-    }
-
-    // Get the task from the source column
-    const sourceItems = [...tasks[source.droppableId].items];
-    const [movedTask] = sourceItems.splice(source.index, 1);
-
-    // If moving within the same column
-    if (source.droppableId === destination.droppableId) {
-      sourceItems.splice(destination.index, 0, movedTask);
-      tasks[source.droppableId].items = sourceItems;
-    } else {
-      // Move to a different column
-      const destinationItems = [...tasks[destination.droppableId].items];
-      destinationItems.splice(destination.index, 0, movedTask);
-      tasks[source.droppableId].items = sourceItems;
-      tasks[destination.droppableId].items = destinationItems;
-    }
-
-    // Broadcast updated tasks to all clients
-    socketIO.emit('tasks', tasks);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('A client disconnected:', socket.id);
-  });
-});
+// Errors
+app.use(errorHandler);
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
