@@ -73,6 +73,9 @@ const getBoards = [protect, async (req, res) => {
 const deleteBoard = [protect, async (req, res) => {
   const { boardId } = req.params;
   try {
+    if (!mongoose.Types.ObjectId.isValid(boardId)) {
+      return res.status(400).json({ error: { message: 'Invalid boardId', code: 400 } });
+    }
     const board = await Board.findById(boardId);
     if (!board) return res.status(404).json({ error: { message: 'Board not found', code: 404 } });
     const workspace = await Workspace.findOne({
@@ -80,12 +83,22 @@ const deleteBoard = [protect, async (req, res) => {
       'members.userId': req.user._id
     });
     if (!workspace) return res.status(403).json({ error: { message: 'Access denied', code: 403 } });
-    await Board.deleteOne({ _id: boardId });
+
     await Card.deleteMany({ boardId });
+    await List.deleteMany({ boardId });
+    await Board.deleteOne({ _id: boardId });
+
+    // Emit Socket.IO event for real-time sync
+    if (req.io) {
+      req.io.to(`workspace:${board.workspaceId}`).emit('board_deleted', { boardId });
+    }
+
     res.json({ message: 'Board deleted' });
   } catch (err) {
+    console.error('Delete board error:', err);
     res.status(400).json({ error: { message: err.message, code: 400 } });
   }
 }];
+
 
 module.exports = { createBoard, getBoards, deleteBoard };

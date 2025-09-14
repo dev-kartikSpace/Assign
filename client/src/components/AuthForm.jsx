@@ -19,6 +19,7 @@ const AuthForm = ({ isSignup }) => {
       });
       const data = await response.json();
       if (data.error) throw new Error(data.error.message);
+      console.log('Login/Signup response:', data); // Debug log
       login(data.user, data.token);
       navigate('/workspaces');
     } catch (err) {

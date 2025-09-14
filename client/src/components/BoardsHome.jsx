@@ -61,10 +61,11 @@ const SortableCard = ({ card, handleDeleteCard }) => {
       {...listeners}
       className="bg-white p-4 mb-3 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 flex justify-between items-center border border-indigo-100"
     >
-      <span className="text-gray-800">{card.title}</span>
+      <span className="text-gray-800 truncate">{card.title}</span>
       <button
         onClick={() => handleDeleteCard(card._id)}
-        className="text-red-600 hover:text-red-800 text-sm"
+        className="text-red-600 hover:text-red-800 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 rounded"
+        aria-label={`Delete card ${card.title}`}
       >
         Delete
       </button>
@@ -115,10 +116,10 @@ const BoardColumn = ({
     .sort((a, b) => a.position - b.position);
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg w-72 min-h-[400px] flex-shrink-0 border border-indigo-200">
-      <div className="flex justify-between items-center mb-6">
+    <div className="bg-white p-5 rounded-xl shadow-lg min-w-[280px] max-w-[300px] h-[480px] flex-shrink-0 border border-indigo-200 flex flex-col">
+      <div className="flex justify-between items-center mb-5">
         <h2
-          className="text-xl font-bold text-white px-3 py-1 rounded-md truncate"
+          className="text-lg md:text-xl font-bold text-white px-3 py-1 rounded-md truncate"
           style={{ backgroundColor: color }}
           title={board.title}
         >
@@ -126,7 +127,8 @@ const BoardColumn = ({
         </h2>
         <button
           onClick={() => handleDeleteBoard(board._id)}
-          className="px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200 text-sm"
+          className="px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-200 text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+          aria-label={`Delete board ${board.title}`}
         >
           Delete
         </button>
@@ -134,14 +136,15 @@ const BoardColumn = ({
       {!isAdding && (
         <button
           onClick={handleAddTaskClick}
-          className="w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200 font-semibold shadow-md mb-6"
+          className="w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-200 font-semibold shadow-md mb-4 whitespace-nowrap"
           disabled={isAdding}
+          aria-label={`Add task to board ${board.title}`}
         >
           Add Task
         </button>
       )}
       {isAdding && (
-        <form onSubmit={handleCardSubmit} className="mb-4">
+        <form onSubmit={handleCardSubmit} className="mb-3">
           <input
             type="text"
             value={newCard.boardId === board._id ? newCard.title : ""}
@@ -155,11 +158,12 @@ const BoardColumn = ({
             placeholder="New Task Title"
             className="w-full p-2 mb-2 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm"
             autoFocus
+            aria-label={`New task title for board ${board.title}`}
           />
           <div className="flex space-x-2">
             <button
               type="submit"
-              className="flex-1 p-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200 text-sm"
+              className="flex-1 p-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
               disabled={!newCard.title.trim()}
             >
               Save
@@ -167,14 +171,14 @@ const BoardColumn = ({
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 p-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 transition duration-200 text-sm"
+              className="flex-1 p-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 transition duration-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
             >
               Cancel
             </button>
           </div>
         </form>
       )}
-      <div className="min-h-[200px]">
+      <div className="flex-grow min-h-[180px] overflow-y-auto">
         <DroppableColumn boardId={board._id}>
           <SortableContext
             items={filteredCards.map((c) => c._id)}
@@ -208,17 +212,17 @@ const ErrorBoundary = ({ children }) => {
 
   if (hasError) {
     return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full">
           <h2 className="text-2xl font-bold text-red-600">
             Something Went Wrong
           </h2>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-3 text-gray-600 break-words">
             Please try refreshing the page or contact support.
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+            className="mt-5 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-4 focus:ring-blue-400"
           >
             Refresh
           </button>
@@ -238,6 +242,7 @@ const BoardsHome = () => {
   const [cards, setCards] = useState([]);
   const [newCard, setNewCard] = useState({ title: "", boardId: "" });
   const [newBoard, setNewBoard] = useState("");
+  const [changeHistory, setChangeHistory] = useState([]);
   const navigate = useNavigate();
   const sensors = useSensors(useSensor(PointerSensor));
 
@@ -255,7 +260,6 @@ const BoardsHome = () => {
         if (!boardsResponse.ok)
           throw new Error(`HTTP error! status: ${boardsResponse.status}`);
         const boardsData = await boardsResponse.json();
-        console.log("Fetched boards data:", boardsData);
         if (boardsData.error)
           throw new Error(
             boardsData.error?.message || "Failed to fetch boards"
@@ -281,7 +285,6 @@ const BoardsHome = () => {
           setCards(allCards);
         }
       } catch (err) {
-        console.error("Fetch error:", err.message);
         if (err.message.includes("401")) {
           logout();
           navigate("/login");
@@ -290,7 +293,32 @@ const BoardsHome = () => {
         }
       }
     };
+
+    const fetchChangeHistory = async () => {
+      if (!token) return;
+      try {
+        const response = await fetch(
+          `http://localhost:5001/api/workspaces/${workspaceId}/history`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
+        const history = await response.json();
+        if (Array.isArray(history)) {
+          setChangeHistory(history); // Set the full history (last 10 from backend)
+        }
+      } catch (err) {
+        console.error("Failed to fetch change history:", err.message);
+        toast.error("Failed to load change history", {
+          position: "bottom-right",
+        });
+      }
+    };
+
     fetchBoardsAndCards();
+    fetchChangeHistory();
     socket?.emit("join_workspace", workspaceId);
 
     return () => {
@@ -300,11 +328,11 @@ const BoardsHome = () => {
 
   useEffect(() => {
     if (socket && workspaceId) {
-      const handleCardCreated = ({ card }) => {
-        if (!cards.some((c) => c._id === card._id)) {
-          console.log("Adding new card:", card);
-          setCards((prev) => [...prev, card]);
-        }
+      const updateChangeHistory = (change) => {
+        setChangeHistory((prev) => {
+          const updatedHistory = [change, ...prev].slice(0, 10); // Keep last 10
+          return updatedHistory;
+        });
       };
 
       socket.on("initial_state", ({ boards, cards }) => {
@@ -312,6 +340,17 @@ const BoardsHome = () => {
         setCards(cards);
       });
       socket.on("card_moved", ({ cardId, newBoardId, newPosition }) => {
+        const card = cards.find((c) => c._id === cardId);
+        if (card) {
+          updateChangeHistory({
+            action: "card_moved",
+            title: card.title,
+            fromBoardId: card.boardId,
+            toBoardId: newBoardId,
+            timestamp: new Date().toISOString(),
+            user: user?.name || "Unknown",
+          });
+        }
         setCards((prev) =>
           prev.map((card) =>
             card._id === cardId
@@ -320,19 +359,64 @@ const BoardsHome = () => {
           )
         );
       });
-      socket.on("card_created", handleCardCreated);
+      socket.on("card_created", ({ card }) => {
+        if (!cards.some((c) => c._id === card._id)) {
+          setCards((prev) => [...prev, card]);
+          updateChangeHistory({
+            action: "card_created",
+            title: card.title,
+            boardId: card.boardId,
+            timestamp: new Date().toISOString(),
+            user: user?.name || "Unknown",
+          });
+        }
+      });
       socket.on("card_deleted", ({ cardId }) => {
+        const card = cards.find((c) => c._id === cardId);
+        if (card) {
+          updateChangeHistory({
+            action: "card_deleted",
+            title: card.title,
+            boardId: card.boardId,
+            timestamp: new Date().toISOString(),
+            user: user?.name || "Unknown",
+          });
+        }
         setCards((prev) => prev.filter((card) => card._id !== cardId));
       });
       socket.on("board_created", ({ board }) => {
         if (!boards.some((b) => b._id === board._id)) {
           setBoards((prev) => [...prev, board]);
+          updateChangeHistory({
+            action: "board_created",
+            title: board.title,
+            timestamp: new Date().toISOString(),
+            user: user?.name || "Unknown",
+          });
+          toast.success(`New board "${board.title}" created`, {
+            position: "bottom-right",
+          });
         }
       });
       socket.on("board_deleted", ({ boardId }) => {
+        const board = boards.find((b) => b._id === boardId);
+        if (board) {
+          updateChangeHistory({
+            action: "board_deleted",
+            title: board.title,
+            timestamp: new Date().toISOString(),
+            user: user?.name || "Unknown",
+          });
+        }
         setBoards((prev) => prev.filter((board) => board._id !== boardId));
       });
       socket.on("user_invited", ({ userId }) => {
+        updateChangeHistory({
+          action: "user_invited",
+          userId,
+          timestamp: new Date().toISOString(),
+          user: user?.name || "Unknown",
+        });
         toast.success(`User ${userId} invited to workspace`, {
           position: "bottom-right",
         });
@@ -341,14 +425,14 @@ const BoardsHome = () => {
       return () => {
         socket.off("initial_state");
         socket.off("card_moved");
-        socket.off("card_created", handleCardCreated);
+        socket.off("card_created");
         socket.off("card_deleted");
         socket.off("board_created");
         socket.off("board_deleted");
         socket.off("user_invited");
       };
     }
-  }, [socket, cards, boards]);
+  }, [socket, cards, boards, user]);
 
   const handleCreateBoard = async (e) => {
     e.preventDefault();
@@ -370,9 +454,14 @@ const BoardsHome = () => {
       if (data.error) throw new Error(data.error.message);
       if (!boards.some((b) => b._id === data._id)) {
         setBoards((prev) => [...prev, data]);
-        socket.emit("board_created", { board: data, workspaceId });
+        if (socket) {
+          socket.emit("board_created", { board: data, workspaceId });
+        }
       }
       setNewBoard("");
+      toast.success(`Board "${data.title}" created successfully`, {
+        position: "bottom-right",
+      });
     } catch (err) {
       toast.error(err.message, { position: "bottom-right" });
     }
@@ -402,7 +491,6 @@ const BoardsHome = () => {
       }
       return Promise.resolve();
     } catch (err) {
-      console.error("Create card error:", err.message);
       throw err;
     }
   };
@@ -418,11 +506,18 @@ const BoardsHome = () => {
         }
       );
       const data = await response.json();
-      if (data.error) throw new Error(data.error.message);
-      setCards(cards.filter((c) => c._id !== cardId));
-      socket.emit("card_deleted", { workspaceId, cardId });
+      if (data.error) {
+        throw new Error(data.error.message || "Failed to delete card");
+      }
+      setCards((prev) => prev.filter((c) => c._id !== cardId));
+      if (socket) {
+        socket.emit("card_deleted", { workspaceId, cardId });
+      }
+      toast.success("Card deleted successfully", { position: "bottom-right" });
     } catch (err) {
-      toast.error(err.message, { position: "bottom-right" });
+      toast.error(err.message || "Failed to delete card", {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -440,6 +535,7 @@ const BoardsHome = () => {
       if (data.error) throw new Error(data.error.message);
       setBoards(boards.filter((b) => b._id !== boardId));
       socket.emit("board_deleted", { workspaceId, boardId });
+      toast.success("Board deleted successfully", { position: "bottom-right" });
     } catch (err) {
       toast.error(err.message, { position: "bottom-right" });
     }
@@ -492,7 +588,6 @@ const BoardsHome = () => {
         );
         const data = await response.json();
         if (!response.ok) throw new Error(data.error?.message || "Move failed");
-        console.log("Move successful:", data);
 
         setCards((prev) =>
           prev.map((c) =>
@@ -509,59 +604,148 @@ const BoardsHome = () => {
           workspaceId,
         });
       } catch (err) {
-        console.error("Move failed:", err.message);
         toast.error(err.message, { position: "bottom-right" });
       }
     }
   };
-
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white">
         <Navbar />
-        <div className="container mx-auto p-6">
-          <h1 className="text-4xl font-bold text-indigo-900 mb-8">
-            Kanban Boards
-          </h1>
-          <form onSubmit={handleCreateBoard} className="mb-8">
-            <div className="flex items-center space-x-2">
+        <main className="max-w-7xl mx-auto p-6 sm:p-8 min-h-[calc(100vh-4rem)] flex flex-col lg:flex-row lg:space-x-8">
+          {/* Main Content - Boards Grid */}
+          <section className="flex-1 min-w-0">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-indigo-900 mb-8 tracking-tight">
+              Kanban Boards
+            </h1>
+            <form
+              onSubmit={handleCreateBoard}
+              className="mb-10 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0"
+            >
               <input
                 type="text"
                 value={newBoard}
                 onChange={(e) => setNewBoard(e.target.value)}
                 placeholder="New Board Title"
-                className="flex-1 p-3 border border-indigo-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm"
+                className="flex-grow p-3 border border-indigo-300 rounded-md focus:ring-4 focus:ring-indigo-400 focus:outline-none text-sm shadow-sm"
+                aria-label="New Board Title"
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 text-sm"
+                className="px-8 py-3 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition duration-200 text-sm font-semibold shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-500 active:scale-95"
+                aria-label="Create Board"
               >
                 Create Board
               </button>
-            </div>
-          </form>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
-          >
-            <div className="flex space-x-6 overflow-x-auto pb-6">
-              {boards.map((board, index) => (
-                <BoardColumn
-                  key={board._id}
-                  board={board}
-                  cards={cards}
-                  handleCreateCard={handleCreateCard}
-                  newCard={newCard}
-                  setNewCard={setNewCard}
-                  handleDeleteBoard={handleDeleteBoard}
-                  handleDeleteCard={handleDeleteCard}
-                  color={colorPalette[index % colorPalette.length]}
-                />
-              ))}
-            </div>
-          </DndContext>
-        </div>
+            </form>
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 min-w-full">
+                {boards.map((board, index) => (
+                  <BoardColumn
+                    key={board._id}
+                    board={board}
+                    cards={cards}
+                    handleCreateCard={handleCreateCard}
+                    newCard={newCard}
+                    setNewCard={setNewCard}
+                    handleDeleteBoard={handleDeleteBoard}
+                    handleDeleteCard={handleDeleteCard}
+                    color={colorPalette[index % colorPalette.length]}
+                  />
+                ))}
+              </div>
+            </DndContext>
+          </section>
+
+          {/* Sidebar - Recent Changes */}
+          <aside className="w-full lg:w-80 mt-8 lg:mt-0 bg-white rounded-lg shadow-md border border-indigo-200 p-6 max-h-[80vh] overflow-y-auto lg:sticky lg:top-28">
+            <h2 className="text-2xl font-bold text-indigo-900 mb-6 border-b border-indigo-300 pb-2">
+              Recent Changes
+            </h2>
+            {changeHistory.length === 0 ? (
+              <p className="text-gray-500 text-center">No recent changes.</p>
+            ) : (
+              <ul className="space-y-3 text-gray-700 text-sm">
+                {changeHistory.map((change, index) => {
+                  const fromBoard = boards.find(
+                    (b) => b._id === change.fromBoardId
+                  );
+                  const toBoard = boards.find((b) => b._id === change.toBoardId);
+                  const fromBoardName = fromBoard
+                    ? fromBoard.title
+                    : change.fromBoardId || "Unknown Board";
+                  const toBoardName = toBoard
+                    ? toBoard.title
+                    : change.toBoardId || "Unknown Board";
+
+                  return (
+                    <li key={index} className="leading-relaxed">
+                      <span className="font-semibold text-indigo-800">
+                        {new Date(change.timestamp).toLocaleString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                          timeZone: "Asia/Kolkata",
+                        })}
+                      </span>{" "}
+                      - <strong className="capitalize">{change.user}</strong>{" "}
+                      <strong className="capitalize">
+                        {change.action.replace(/_/g, " ")}
+                      </strong>
+                      :{" "}
+                      <em className="text-indigo-600">
+                        {change.title || change.userId || "N/A"}
+                      </em>
+                      {change.fromBoardId &&
+                        change.toBoardId &&
+                        change.fromBoardId !== change.toBoardId && (
+                          <span>
+                            {" "}
+                            (
+                            <span className="text-gray-500">
+                              from Board {fromBoardName}
+                            </span>{" "}
+                            to{" "}
+                            <span className="text-gray-500">
+                              Board {toBoardName}
+                            </span>
+                            )
+                          </span>
+                        )}
+                      {change.fromBoardId && !change.toBoardId && (
+                        <span>
+                          {" "}
+                          (
+                          <span className="text-gray-500">
+                            from Board {fromBoardName}
+                          </span>
+                          )
+                        </span>
+                      )}
+                      {change.toBoardId && !change.fromBoardId && (
+                        <span>
+                          {" "}
+                          (
+                          <span className="text-gray-500">
+                            to Board {toBoardName}
+                          </span>
+                          )
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </aside>
+        </main>
       </div>
     </ErrorBoundary>
   );
