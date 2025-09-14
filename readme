@@ -1,12 +1,11 @@
 # Kanbanly 🚀
 
-**A sleek, real-time Kanban board app inspired by Trello**  
+
+**A sleek, real-time Kanban board app inspired by Trello**
 *Collaborate on workspaces, drag-and-drop cards, and track changes instantly*
 
-<div align="center">
-
 [![Demo Video](https://img.shields.io/badge/🎥_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=cemYD8L0RNs)
-[![Live Demo](https://img.shields.io/badge/🚀_Try-Live_Demo-blue?style=for-the-badge&logo=vercel)](https://your-live-demo-link-here.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/🚀_Try-Live_Demo-blue?style=for-the-badge&logo=vercel)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
 [![GitHub](https://img.shields.io/badge/⭐_Star-Repository-black?style=for-the-badge&logo=github)](https://github.com/dev-kartikSpace/Mini-Trello-App)
 
 </div>
@@ -22,9 +21,9 @@
 
 [![App Usage Demo](https://img.youtube.com/vi/cemYD8L0RNs/maxresdefault.jpg)](https://www.youtube.com/watch?v=cemYD8L0RNs)
 
-</div>
+**👆 Click to watch the full demo**
 
----
+</div>
 
 ### 👥 Real-time Collaboration Demo  
 *See how teams collaborate seamlessly with instant synchronization*
@@ -33,8 +32,9 @@
 
 [![Collaboration Demo](https://img.youtube.com/vi/OMKPKcaUgqY/maxresdefault.jpg)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
 
-</div>
+**👆 Click to watch collaboration in action**
 
+</div>
 
 ---
 
@@ -44,28 +44,28 @@
 *Clean and intuitive landing page with modern design*
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/dev-kartikSpace/Mini-Trello-App/main/client/src/assets/homePage.png" alt="Kanbanly Home Page" width="800">
+  <img src="./homePage.png" alt="Kanbanly Home Page" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 📋 Board Interface
 *Organized board layout with drag-and-drop functionality*
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/dev-kartikSpace/Mini-Trello-App/main/client/src/assets/board.png" alt="Kanban Board Interface" width="800">
+  <img src="./board.png" alt="Kanban Board Interface" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 🖱️ Drag & Drop in Action
 *Smooth and responsive drag-and-drop experience*
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/dev-kartikSpace/Mini-Trello-App/main/client/src/assets/dragdrop.png" alt="Drag and Drop Feature" width="600">
+  <img src="./dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 👥 Team Collaboration
 *Real-time collaboration with multiple users*
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/dev-kartikSpace/Mini-Trello-App/main/client/src/assets/collab.png" alt="Team Collaboration" width="600">
+  <img src="./collab.png" alt="Team Collaboration" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ---
