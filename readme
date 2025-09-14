@@ -1,58 +1,89 @@
 # Kanbanly 🚀
 
-A sleek, real-time Kanban board app inspired by Trello, built with a mono-repo architecture. Collaborate on workspaces, drag-and-drop cards, and track changes instantly. Perfect for teams and solo productivity!
+<div align="center">
 
-[![Demo Video](https://img.shields.io/badge/Demo-Watch%20Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=cemYD8L0RNs)
-[![Drag-Drop Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge&logo=vercel)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/dev-kartikSpace/Mini-Trello-App)
+![Kanbanly Logo](https://img.shields.io/badge/Kanbanly-Project%20Management-blue?style=for-the-badge&logo=trello&logoColor=white)
 
+**A sleek, real-time Kanban board app inspired by Trello**
+*Collaborate on workspaces, drag-and-drop cards, and track changes instantly*
 
-## 🎥 Demo Videos
+[![Demo Video](https://img.shields.io/badge/🎥_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=cemYD8L0RNs)
+[![Live Demo](https://img.shields.io/badge/🚀_Try-Live_Demo-blue?style=for-the-badge&logo=vercel)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
+[![GitHub](https://img.shields.io/badge/⭐_Star-Repository-black?style=for-the-badge&logo=github)](https://github.com/dev-kartikSpace/Mini-Trello-App)
 
-### App Usage Demo
-Watch the app in action, showcasing core features and intuitive interface:
-
-[![App Usage Demo](https://img.youtube.com/vi/YOUR_APP_USAGE_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=cemYD8L0RNs)
-
-### Real-time Collaboration Demo
-See how multiple users collaborate seamlessly with instant synchronization:
-
-[![Collaboration Demo](https://img.youtube.com/vi/YOUR_COLLAB_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
+</div>
 
 ---
 
-## 📸 Screenshots
+## 🎥 Demo Showcase
 
-### Application Interface
+### 📱 App Usage Demo
+*Experience the intuitive interface and powerful features in action*
 
 <div align="center">
-  
-| 🏠 **Home Page** | 📋 **Board View** | 🎯 **Card Management** |
-|:---:|:---:|:---:|
-| ![Home Page](./client/src/assets/homePage.png) | ![Board View](./client//src//assets//board.png) |
-| *Clean and intuitive landing page* | *Organized board layout with lists* | *Easy card creation and editing* |
+
+[![App Usage Demo](https://img.youtube.com/vi/cemYD8L0RNs/maxresdefault.jpg)](https://www.youtube.com/watch?v=cemYD8L0RNs)
+
+**👆 Click to watch the full demo**
 
 </div>
 
-### Key Features in Action
+### 👥 Real-time Collaboration Demo  
+*See how teams collaborate seamlessly with instant synchronization*
 
 <div align="center">
 
-| 🖱️ **Drag & Drop** | 👥 **Team Collaboration** | 📱 **Responsive Design** |
-|:---:|:---:|:---:|
-| ![Drag & Drop](./client/src/assets/dragdrop.png) | ![Collaboration](./client/src/assets/collab.png) |
-| *Smooth drag and drop functionality* | *Real-time team collaboration* | *Mobile-first responsive design* |
+[![Collaboration Demo](https://img.youtube.com/vi/OMKPKcaUgqY/maxresdefault.jpg)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
+
+**👆 Click to watch collaboration in action**
 
 </div>
 
-### User Experience Flow
+---
+
+## 📸 Visual Tour
+
+### 🏠 Home Page
+*Clean and intuitive landing page with modern design*
+
+<div align="center">
+  <img src="./client/src/assets/homePage.png" alt="Kanbanly Home Page" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+</div>
+
+### 📋 Board Interface
+*Organized board layout with drag-and-drop functionality*
+
+<div align="center">
+  <img src="./client/src/assets/board.png" alt="Kanban Board Interface" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+</div>
+
+### 🖱️ Drag & Drop in Action
+*Smooth and responsive drag-and-drop experience*
+
+<div align="center">
+  <img src="./client/src/assets/dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+</div>
+
+### 👥 Team Collaboration
+*Real-time collaboration with multiple users*
+
+<div align="center">
+  <img src="./client/src/assets/collab.png" alt="Team Collaboration" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+</div>
+
+---
+
+## ✨ Key Features
 
 <div align="center">
 
-| 🔐 **Authentication** | ⚙️ **Settings** | 📊 **Analytics** |
+| 🎯 **Core Features** | 🔥 **Advanced** | 🚀 **Performance** |
 |:---:|:---:|:---:|
-| ![Login](./assets/login.png) | ![Settings](./assets/settings.png) | ![Analytics](./assets/analytics.png) |
-| *Secure login and registration* | *Customizable user preferences* | *Project insights and metrics* |
+| ✅ Drag & Drop Cards | ⚡ Real-time Sync | 🏃‍♂️ Fast Loading |
+| 📋 Multiple Boards | 👥 Team Collaboration | 📱 Mobile Responsive |
+| 🏷️ Card Labels | 🔔 Instant Notifications | ⚡ Socket.IO Integration |
+| 📝 Rich Text Editing | 🔐 Secure Authentication | 🎨 Modern UI/UX |
+| 📅 Due Dates | 📊 Activity Tracking | 🔄 Auto-save |
 
 </div>
 
@@ -60,244 +91,278 @@ See how multiple users collaborate seamlessly with instant synchronization:
 
 ## 🛠️ Tech Stack
 
-### **Backend Architecture**
-- **🟢 Node.js** - JavaScript runtime for server-side development
-- **⚡ Express.js** - Fast, minimalist web framework for API routing
-- **🍃 MongoDB** - NoSQL database with Mongoose ODM for flexible data modeling
-- **🔌 Socket.IO** - Real-time bidirectional communication engine
-- **🔐 JWT** - Secure, stateless authentication tokens
-- **🛡️ bcrypt** - Password hashing for enhanced security
+<div align="center">
 
-### **Frontend Experience**
-- **⚛️ React 18** - Modern UI library with hooks and context
-- **🎯 React Router** - Declarative routing for single-page applications
-- **🎨 Tailwind CSS** - Utility-first CSS framework for rapid styling
-- **🎭 @dnd-kit** - Accessible drag-and-drop toolkit
-- **🔔 react-toastify** - Elegant notification system
-- **🔌 Socket.IO Client** - Real-time client-side synchronization
-- **📱 Responsive Design** - Mobile-first approach with breakpoint optimization
+### **Backend Powerhouse**
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
 
-### **Why These Technologies?**
+### **Frontend Excellence**  
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+
+</div>
+
+### 🎯 Architecture Highlights
 
 ```mermaid
 graph TD
-    A[Node.js Ecosystem] --> B[Full-Stack JavaScript]
-    C[MongoDB] --> D[Schema Flexibility]
-    E[Socket.IO] --> F[Real-time Collaboration]
-    G[React] --> H[Component Architecture]
-    I[Tailwind] --> J[Rapid Development]
-    K[JWT] --> L[Stateless Security]
+    A[React Frontend] --> B[Express API]
+    B --> C[MongoDB Database]
+    A --> D[Socket.IO Client]
+    D --> E[Socket.IO Server]
+    E --> C
+    B --> F[JWT Authentication]
+    A --> G[Tailwind CSS]
+    E --> H[Real-time Updates]
 ```
 
-**Node.js** enables a unified JavaScript environment across the entire stack, reducing context switching and improving developer productivity. **MongoDB's** document-based structure perfectly suits dynamic Kanban data with varying card properties. **Socket.IO** ensures instant updates across all connected clients for seamless collaboration. **React's** component-based architecture makes complex UI state management intuitive. **Tailwind CSS** accelerates development while maintaining design consistency and responsiveness.
+**Why These Technologies?**
+- **🟢 Node.js**: Unified JavaScript environment across full stack
+- **⚡ Express.js**: Fast, minimalist web framework for robust APIs
+- **🍃 MongoDB**: Flexible document structure perfect for dynamic Kanban data
+- **🔌 Socket.IO**: Real-time bidirectional communication for instant collaboration
+- **⚛️ React 18**: Modern hooks and context for efficient state management
+- **🎨 Tailwind CSS**: Utility-first approach for rapid, consistent styling
 
 ---
 
-## 🚀 Quick Start Guide
+## 🚀 Quick Start
 
 ### **Prerequisites**
-- 📦 **Node.js** v18+ ([Download here](https://nodejs.org/))
-- 🍃 **MongoDB** (Local installation or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
-- 🔧 **Git** ([Download here](https://git-scm.com/))
-- 📝 **Code Editor** (VS Code recommended)
+- 📦 Node.js v18+ 
+- 🍃 MongoDB (Local or Atlas)
+- 🔧 Git
+- 📝 Code Editor
 
-### **🔧 Installation Steps**
+### **⚡ Installation**
 
-1. **Clone the Repository**
+1. **Clone & Navigate**
    ```bash
    git clone https://github.com/dev-kartikSpace/Mini-Trello-App.git
-   cd kanbanly
+   cd Mini-Trello-App
    ```
 
-2. **Environment Configuration**
+2. **Environment Setup**
    ```bash
-   # Copy environment template
+   # Create environment file
    cp .env.example .env
-   
-   # Edit .env with your configurations
-   nano .env
    ```
    
-   **Required Environment Variables:**
+   **Configure your .env:**
    ```env
    # Database
    MONGO_URI=mongodb://localhost:27017/kanbanly
-   # or for MongoDB Atlas:
-   # MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/kanbanly
    
    # Authentication
    JWT_SECRET=your-super-secret-jwt-key
    JWT_EXPIRE=7d
    
-   # Server Configuration
+   # Server
    PORT=5001
    NODE_ENV=development
-   
-   # Client Configuration
    CLIENT_URL=http://localhost:5173
    ```
 
 3. **Install Dependencies**
    ```bash
-   # Install all dependencies using NPM workspaces
    npm install
    ```
 
-4. **Start the Backend Server**
+4. **Start Backend** 🔧
    ```bash
    cd backend
    npm run dev
    ```
-   
    ✅ Backend running at `http://localhost:5001`
-   ✅ Socket.IO server active for real-time features
 
-5. **Launch the Frontend**
+5. **Launch Frontend** ⚛️
    ```bash
-   # In a new terminal
-   cd frontend
+   # New terminal
+   cd frontend  
    npm run dev
    ```
-   
    ✅ Frontend running at `http://localhost:5173`
 
-6. **🎉 Access Your App**
-   Open `http://localhost:5173` in your browser and start organizing!
+6. **🎉 You're Ready!**
+   Open `http://localhost:5173` and start organizing!
 
 ---
 
-## 📁 Project Architecture
+## 📁 Project Structure
 
 ```
 kanbanly/
-├── 📂 backend/                 # Server-side application
-│   ├── 📂 controllers/         # Request handlers and business logic
-│   ├── 📂 middleware/          # Authentication and validation
-│   ├── 📂 models/              # MongoDB schemas and models
-│   ├── 📂 routes/              # API endpoint definitions
-│   ├── 📂 socket/              # Real-time event handlers
-│   ├── 📂 utils/               # Helper functions and utilities
-│   └── 📄 server.js            # Application entry point
-├── 📂 frontend/                # Client-side React application
-│   ├── 📂 src/
-│   │   ├── 📂 components/      # Reusable UI components
-│   │   ├── 📂 pages/           # Route-level components
-│   │   ├── 📂 hooks/           # Custom React hooks
-│   │   ├── 📂 context/         # Global state management
-│   │   ├── 📂 utils/           # Client-side utilities
-│   │   └── 📂 assets/          # Images, icons, and media
-│   └── 📄 vite.config.js       # Vite configuration
-├── 📂 assets/                  # Project screenshots and media
-├── 📂 docs/                    # Technical documentation
-│   ├── 📄 HLD.md              # High-level design document
-│   ├── 📄 LLD.md              # Low-level design document
-│   └── 📄 API.md              # API documentation
-└── 📄 package.json            # Workspace configuration
+├── 🏗️ backend/                 # Server-side application
+│   ├── 🎮 controllers/         # Business logic handlers
+│   ├── 🛡️ middleware/          # Auth & validation
+│   ├── 📊 models/              # MongoDB schemas
+│   ├── 🛣️ routes/              # API endpoints
+│   ├── 🔌 socket/              # Real-time handlers
+│   └── 🚀 server.js            # App entry point
+├── ⚛️ frontend/                # React application
+│   ├── 🧩 src/components/      # Reusable components
+│   ├── 📄 src/pages/           # Route components
+│   ├── 🪝 src/hooks/           # Custom hooks
+│   ├── 🌐 src/context/         # State management
+│   └── 🎨 src/assets/          # Images & media
+├── 📸 assets/                  # Project screenshots
+└── 📚 docs/                    # Documentation
 ```
 
 ---
 
-## 🗄️ Database Schema
+## 🗄️ Database Architecture
 
-### **Entity Relationship Overview**
+<div align="center">
 
+```mermaid
+erDiagram
+    User ||--o{ Workspace : creates
+    User ||--o{ Board : manages
+    Workspace ||--o{ Board : contains
+    Board ||--o{ Card : holds
+    User ||--o{ Card : assigns
+    
+    User {
+        ObjectId _id
+        string name
+        string email
+        string password
+        string avatar
+        date createdAt
+    }
+    
+    Workspace {
+        ObjectId _id
+        string title
+        string description
+        ObjectId owner
+        array members
+        date createdAt
+    }
+    
+    Board {
+        ObjectId _id
+        string title
+        ObjectId workspaceId
+        string visibility
+        array members
+        date createdAt
+    }
+    
+    Card {
+        ObjectId _id
+        string title
+        string description
+        ObjectId boardId
+        string listId
+        number position
+        array assignees
+        array labels
+        date dueDate
+        date createdAt
+    }
 ```
-┌─────────────┐    1:N    ┌─────────────┐    1:N    ┌─────────────┐
-│    User     │◄─────────►│ Workspace   │◄─────────►│    Board    │
-├─────────────┤           ├─────────────┤           ├─────────────┤
-│ _id         │           │ _id         │           │ _id         │
-│ name        │           │ title       │           │ title       │
-│ email       │           │ description │           │ description │
-│ password    │           │ owner       │           │ workspaceId │
-│ avatar      │           │ members[]   │           │ visibility  │
-│ createdAt   │           │ createdAt   │           │ members[]   │
-└─────────────┘           └─────────────┘           │ createdAt   │
-                                                    └─────────────┘
-                                                           │
-                                                         1:N
-                                                           ▼
-┌─────────────┐                                  ┌─────────────┐
-│ ChangeLog   │                                  │    Card     │
-├─────────────┤                                  ├─────────────┤
-│ _id         │                                  │ _id         │
-│ workspaceId │                                  │ title       │
-│ action      │                                  │ description │
-│ details     │                                  │ boardId     │
-│ user        │                                  │ listId      │
-│ timestamp   │                                  │ position    │
-└─────────────┘                                  │ assignees[] │
-                                                 │ labels[]    │
-                                                 │ dueDate     │
-                                                 │ createdBy   │
-                                                 │ createdAt   │
-                                                 └─────────────┘
-```
 
-### **Core Collections**
-
-- **👤 User**: Authentication and profile management
-- **🏢 Workspace**: Team collaboration spaces
-- **📋 Board**: Project organization containers
-- **📝 Card**: Individual tasks and items
-- **📊 ChangeLog**: Audit trail for all activities
+</div>
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how to get involved:
+We love contributions! Here's how to get involved:
 
-### **Development Workflow**
-1. 🍴 **Fork** the repository
-2. 🌿 **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. 💾 **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. 📤 **Push** to the branch (`git push origin feature/amazing-feature`)
-5. 🔄 **Open** a Pull Request
+### **🔄 Development Workflow**
+1. 🍴 Fork the repository
+2. 🌿 Create your feature branch
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. 💾 Commit your changes
+   ```bash
+   git commit -m 'Add some amazing feature'
+   ```
+4. 📤 Push to the branch
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. 🔄 Open a Pull Request
 
-### **Code Style Guidelines**
-- Follow ESLint and Prettier configurations
+### **📋 Code Guidelines**
+- Follow ESLint configuration
 - Write meaningful commit messages
-- Add JSDoc comments for functions
-- Include unit tests for new features
+- Add JSDoc comments
+- Include tests for new features
+- Ensure responsive design
 
-### **Reporting Issues**
-Found a bug or have a suggestion? [Open an issue](https://github.com/dev-kartikSpace/Mini-Trello-App/issues) with:
+### **🐛 Found a Bug?**
+[Create an issue](https://github.com/dev-kartikSpace/Mini-Trello-App/issues) with:
 - Clear description
 - Steps to reproduce
-- Expected vs actual behavior
+- Expected behavior
 - Screenshots if applicable
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+<div align="center">
+
+**MIT License** - see the [LICENSE](LICENSE) file for details
+
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+</div>
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Made with ❤️ by [Your Name]**
-- Inspired by Trello's intuitive design
-- Built with modern web technologies
-- Special thanks to the open-source community
+<div align="center">
+
+**Made with ❤️ by the Kanbanly Team**
+
+Special thanks to:
+- 🎨 Trello for design inspiration
+- 🌟 Open source community
+- 🚀 Modern web technologies
+- 👥 Our amazing contributors
+
+</div>
 
 ---
 
-## 📚 Additional Resources
+## 📚 Documentation
 
-- 📖 [High-Level Design](./docs/HLD.md) - Architecture overview
-- 🔧 [Low-Level Design](./docs/LLD.md) - Detailed technical specifications  
-- 🌐 [API Documentation](./docs/API.md) - Complete endpoint reference
-- 💬 [Discussions](https://github.com/dev-kartikSpace/Mini-Trello-App)
+<div align="center">
+
+| 📖 **Resource** | 🔗 **Link** |
+|:---:|:---:|
+| High-Level Design | [HLD.md](./docs/HLD.md) |
+| Low-Level Design | [LLD.md](./docs/LLD.md) |
+| API Documentation | [API.md](./docs/API.md) |
+| Contributing Guide | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+
+</div>
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful!**
+### **⭐ Show Your Support**
 
-[![GitHub stars](https://img.shields.io/github/stars/your-username/kanbanly?style=social)](https://github.com/dev-kartikSpace/Mini-Trello-App/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/your-username/kanbanly?style=social)](https://github.com/dev-kartikSpace/Mini-Trello-App/network)
+If this project helped you, please consider giving it a star!
+
+[![GitHub stars](https://img.shields.io/github/stars/dev-kartikSpace/Mini-Trello-App?style=social)](https://github.com/dev-kartikSpace/Mini-Trello-App/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/dev-kartikSpace/Mini-Trello-App?style=social)](https://github.com/dev-kartikSpace/Mini-Trello-App/network)
+[![GitHub issues](https://img.shields.io/github/issues/dev-kartikSpace/Mini-Trello-App?style=social)](https://github.com/dev-kartikSpace/Mini-Trello-App/issues)
+
+**Ready to revolutionize your project management? Let's get started! 🚀**
 
 </div>
