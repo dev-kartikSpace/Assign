@@ -1,0 +1,184 @@
+Kanbanly 🚀
+A sleek, real-time Kanban board app inspired by Trello, built with a mono-repo architecture. Collaborate on workspaces, drag-and-drop cards, and track changes instantly. Perfect for teams and solo productivity!
+
+[![Demo Video](| Screenshots | Tech Stack | Get Started
+
+Demo Videos 🎥
+App Usage
+Watch the app in action, showing core features and interface:
+[![App Usage Demo](https://img.youtube.com/vi/YOUR_APP_USAGE_VIDEO_ID/(https://www.youtube.com/watch?v=YOUR_APP_USAGE_VIDEO_ID video ID.*
+
+Collaboration Demo
+See how the app works in a collaborative environment with two users on separate screens syncing in real-time:
+[![Collaboration Demo](https://img.youtube.com/vi/YOUR_COLLAB_VIDEO_ID/0.jpg(https://www.youtube.com/watch
+
+## Screenshots 📸
+
+See the app interface and features through these screenshots:
+
+| Home Page                     | Board View                  | Card Drag & Drop             |
+|-------------------------------|-----------------------------|-----------------------------|
+| ![Home Page](./client/src/assets/homePage.png) | ![Board View](./client//src//assets//board.png) | ![Drag & Drop](./client/src//assets/dragdrop.png) |
+
+*Note:* Make sure to upload your screenshots and GIFs inside the `assets/` folder in your repo root. Use appropriate file names and update the paths if different.
+
+
+Tech Stack 🛠️
+Backend
+Node.js, Express.js for API routing
+
+MongoDB with Mongoose for flexible and schema-less data
+
+Socket.IO for real-time bidirectional communication
+
+JWT for secure, stateless authentication
+
+Frontend
+React with React Router for UI and routing
+
+@dnd-kit for accessible, performant drag-and-drop
+
+Tailwind CSS for rapid, responsive styling
+
+react-toastify for notifications
+
+Socket.IO-client for real-time syncing
+
+Why these technologies?
+Node.js enables a full-stack JavaScript environment. MongoDB’s schema flexibility suits dynamic data. Socket.IO ensures instant updates for collaborative editing. React’s component-based architecture easily manages complex UIs. Tailwind speeds up styling while maintaining responsiveness.
+
+Get Started 🚀
+Prerequisites
+Node.js v18+
+
+MongoDB (local or Atlas cluster)
+
+Git
+
+Setup Instructions
+Clone the repository
+
+bash
+git clone https://github.com/your-username/trello-clone.git
+cd trello-clone
+Configure environment variables
+
+Copy .env.example to .env in the root directory
+
+Update variables (MONGO_URI, JWT_SECRET, etc.)
+
+Install dependencies (NPM workspaces)
+
+bash
+npm install
+Start the backend server
+
+bash
+cd backend
+npm start
+The backend runs on http://localhost:5001 with Socket.IO for real-time events.
+
+Start the frontend application
+
+bash
+cd frontend
+npm run dev
+Access the app at http://localhost:5173 (default Vite port).
+
+Project Structure 📂
+backend/ - API routes, MongoDB models, Socket.IO server
+
+frontend/ - React components, drag-and-drop UI, Tailwind styling
+
+docs/ - High-level and low-level design documents
+
+assets/ - Screenshots, demo videos, and media
+
+Database Schema Overview
+Key Collections (MongoDB)
+User: stores users with _id, name, email, hashed password.
+
+Workspace: contains title, owner, members with roles.
+
+Board: title, access level, linked workspace, member list.
+
+Card: linked to Board, ordered by position, creator info.
+
+ChangeLog: workspace actions, timestamps, user activities.
+
+Entity Relationship Diagram (ASCII)
+text
++----------+  1..n  +------------+  1..n  +----------+
+|   User   | ------ | Workspace  | ------ |   Board  |
++----------+        +------------+        +----------+
+  | name             | title              | title
+  | email            | owner (User)       | visibility
+  | password         | members (User[])   | workspaceId
+                                      1..n  | members (User[])
+                                             +----------+
+                                                 |
+                                               1..n
+                                             +----------+
+                                             |   Card   |
+                                             +----------+
+                                               | title
+                                               | boardId
+                                               | position
+                                               | createdBy (User)
+
++-------------+
+| ChangeLog   |
++-------------+
+  | workspaceId
+  | action
+  | title
+  | fromBoardId
+  | toBoardId
+  | timestamp
+  | user (User)
+Design Documentation
+High-Level Design (HLD)
+Frontend (React) communicates with Express backend via REST and Socket.IO.
+
+Backend manages API routing, DB operations, and real-time events.
+
+Authentication secured via JWT tokens.
+
+Data stored in MongoDB collections representing users, workspaces, boards, cards, and logs.
+
+Real-time features use WebSocket via Socket.IO for collaboration.
+
+Low-Level Design (LLD)
+API Endpoints for authentication, workspace, board, and card management.
+
+JSON error model with consistent response format.
+
+MongoDB indexing on foreign keys and position fields for performance.
+
+Contributing 🤝
+Fork the repository.
+
+Create a feature branch.
+
+Commit changes with clear messages.
+
+Open a Pull Request for review.
+
+Issues and suggestions are welcome!
+
+License 📄
+This project is licensed under the MIT License. Free to use, modify, and distribute.
+
+Acknowledgments ❤️
+Made with passion by [Your Name].
+
+Check the /docs folder for detailed design specifications and API documentation.
+
+Notes:
+Replace placeholder URLs, video IDs, and names with real values.
+
+Add media files inside the assets/ folder.
+
+Keep README updated with any new features or documentation.
+
+This README provides a polished first impression for contributors and recruiters, highlighting your app's core features, tech stack, and easy setup steps .

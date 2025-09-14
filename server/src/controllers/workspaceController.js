@@ -17,20 +17,25 @@ const createWorkspace = [protect, async (req, res) => {
     });
     await workspace.save();
 
-    // Log workspace creation
-    await new ChangeLog({
-      workspaceId: workspace._id,
-      action: 'workspace_created',
-      title: workspace.title,
-      userId: req.user._id,
-      timestamp: new Date(),
-    }).save();
+    // Log workspace creation safely
+    try {
+      await new ChangeLog({
+        workspaceId: workspace._id,
+        action: 'workspace_created',
+        title: workspace.title,
+        userId: req.user._id,
+        timestamp: new Date(),
+      }).save();
+    } catch (logErr) {
+      console.error("Changelog save failed:", logErr.message);
+    }
 
-    res.status(201).json(workspace);
+    res.status(201).json(workspace.toObject());
   } catch (err) {
-    res.status(400).json({ error: { message: err.message, code: 400 } });
+    res.status(500).json({ error: { message: err.message, code: 500 } });
   }
 }];
+
 
 const getWorkspaces = [protect, async (req, res) => {
   try {
