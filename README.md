@@ -57,13 +57,6 @@
   <img src="./client/src/assets/board.png" alt="Kanban Board Interface" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
-### 🖱️ Drag & Drop in Action
-*Smooth and responsive drag-and-drop experience*
-
-<div align="center">
-  <img src="./client/src/assets/dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
-</div>
-
 ### 👥 Team Collaboration
 *Real-time collaboration with multiple users*
 
