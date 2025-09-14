@@ -469,6 +469,11 @@ const BoardsHome = () => {
 
   const handleCreateCard = async (boardId) => {
     if (!token) return;
+    console.log("Creating card with:", {
+      title: newCard.title.trim(),
+      boardId,
+      position: cards.filter((c) => c.boardId === boardId).length,
+    }); // Debug log
     try {
       const response = await fetch("http://localhost:5001/api/cards", {
         method: "POST",
@@ -480,6 +485,7 @@ const BoardsHome = () => {
           title: newCard.title.trim(),
           boardId,
           position: cards.filter((c) => c.boardId === boardId).length,
+          createdBy: user?._id, // ✅ add this
         }),
       });
       const data = await response.json();
@@ -491,6 +497,7 @@ const BoardsHome = () => {
       }
       return Promise.resolve();
     } catch (err) {
+      console.error("Card creation error:", err); // Debug error
       throw err;
     }
   };
@@ -533,7 +540,7 @@ const BoardsHome = () => {
       );
       const data = await response.json();
       if (data.error) throw new Error(data.error.message);
-      setBoards(boards.filter((b) => b._id !== boardId));
+      setBoards((prev) => prev.filter((b) => b._id !== boardId));
       socket.emit("board_deleted", { workspaceId, boardId });
       toast.success("Board deleted successfully", { position: "bottom-right" });
     } catch (err) {
@@ -674,7 +681,9 @@ const BoardsHome = () => {
                   const fromBoard = boards.find(
                     (b) => b._id === change.fromBoardId
                   );
-                  const toBoard = boards.find((b) => b._id === change.toBoardId);
+                  const toBoard = boards.find(
+                    (b) => b._id === change.toBoardId
+                  );
                   const fromBoardName = fromBoard
                     ? fromBoard.title
                     : change.fromBoardId || "Unknown Board";

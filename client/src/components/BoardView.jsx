@@ -19,7 +19,8 @@ import Navbar from "./Navbar";
 
 const SortableCard = ({ card, handleDeleteCard }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: card._id });
+    useSortable({ id: `card-${card._id}` });
+
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -107,22 +108,19 @@ const BoardColumn = ({
           </button>
         )}
       </form>
-      <SortableContext
-        id={board._id}
-        items={cards.filter((c) => c.boardId === board._id).map((c) => c._id)}
-        strategy={verticalListSortingStrategy}
-      >
-        {cards
-          .filter((card) => card.boardId === board._id)
-          .sort((a, b) => a.position - b.position)
-          .map((card) => (
-            <SortableCard
-              key={card._id}
-              card={card}
-              handleDeleteCard={handleDeleteCard}
-            />
-          ))}
-      </SortableContext>
+<SortableContext
+  id={`board-${board._id}`}
+  items={cards.filter((c) => c.boardId === board._id).map((c) => `card-${c._id}`)}
+  strategy={verticalListSortingStrategy}
+>
+  {cards
+    .filter((card) => card.boardId === board._id)
+    .sort((a, b) => a.position - b.position)
+    .map((card) => (
+      <SortableCard key={card._id} card={card} handleDeleteCard={handleDeleteCard} />
+    ))}
+</SortableContext>
+
     </div>
   );
 };
@@ -184,28 +182,37 @@ const BoardView = () => {
     }
   }, [socket]);
 
-  const handleCreateCard = async (boardId) => {
-    try {
-      const response = await fetch("http://localhost:5001/api/cards", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title: newCard.title,
-          boardId,
-          position: cards.filter((c) => c.boardId === boardId).length,
-        }),
-      });
-      const data = await response.json();
-      if (data.error) throw new Error(data.error.message);
-      setCards([...cards, data]);
-      setNewCard({ title: "", boardId: "" });
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+const handleCreateCard = async (boardId) => {
+  try {
+    const response = await fetch("http://localhost:5001/api/cards", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        title: newCard.title,
+        boardId,
+        position: cards.filter((c) => c.boardId === boardId).length,
+      }),
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.error.message);
+
+    // Option A: append only if not already there
+    setCards((prev) =>
+      prev.some((c) => c._id === data._id) ? prev : [...prev, data]
+    );
+
+    // Option B (cleaner): refetch cards from backend after creation
+    // await fetchBoardsAndCards();
+    
+    setNewCard({ title: "", boardId: "" });
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
 
   const handleDeleteCard = async (cardId) => {
     try {
@@ -225,50 +232,68 @@ const BoardView = () => {
     }
   };
 
-  const handleDragEnd = async (event) => {
-    const { active, over } = event;
-    if (!over) return;
+const handleDragEnd = async (event) => {
+  const { active, over } = event;
+  if (!over) return;
 
-    const cardId = active.id;
-    const newBoardId = over.id.split("-")[0];
+  // card id without "card-" prefix
+  const cardId = active.id.replace("card-", "");
+
+  let newBoardId;
+  let newPosition;
+
+  if (over.id.startsWith("card-")) {
+    // dropped on another card
+    const overCardId = over.id.replace("card-", "");
+    const overCard = cards.find((c) => c._id === overCardId);
+    newBoardId = overCard.boardId;
+
     const cardsInBoard = cards
       .filter((c) => c.boardId === newBoardId)
       .sort((a, b) => a.position - b.position);
-    const newPosition = over.id.includes("card")
-      ? cardsInBoard.findIndex((c) => c._id === over.id.split("-")[1])
-      : cardsInBoard.length;
 
-    try {
-      const response = await fetch(
-        `http://localhost:5001/api/cards/${cardId}/move`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ newBoardId, newPosition }),
-        }
-      );
-      const data = await response.json();
-      if (data.error) throw new Error(data.error.message);
-      setCards((prev) =>
-        prev.map((card) =>
-          card._id === cardId
-            ? { ...card, boardId: newBoardId, position: newPosition }
-            : card
-        )
-      );
-      socket.emit("card_moved", {
-        cardId,
-        newBoardId,
-        newPosition,
-        workspaceId: boardId,
-      });
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+    newPosition = cardsInBoard.findIndex((c) => c._id === overCardId);
+  } else if (over.id.startsWith("board-")) {
+    // dropped on empty board space
+    newBoardId = over.id.replace("board-", "");
+    const cardsInBoard = cards.filter((c) => c.boardId === newBoardId);
+    newPosition = cardsInBoard.length;
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:5001/api/cards/${cardId}/move`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ newBoardId, newPosition }),
+      }
+    );
+    const data = await response.json();
+    if (data.error) throw new Error(data.error.message);
+
+    setCards((prev) =>
+      prev.map((card) =>
+        card._id === cardId
+          ? { ...card, boardId: newBoardId, position: newPosition }
+          : card
+      )
+    );
+
+    socket.emit("card_moved", {
+      cardId,
+      newBoardId,
+      newPosition,
+      workspaceId: boardId,
+    });
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white">
