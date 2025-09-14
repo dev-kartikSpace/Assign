@@ -1,159 +1,64 @@
 const express = require('express');
-const app = express();
-const PORT = 5001;
-
-// Enable CORS for Express
+const dotenv = require('dotenv');
 const cors = require('cors');
-app.use(cors({ origin: 'http://localhost:5173' }));
-
-// Socket.IO setup
+const bodyParser = require('body-parser');
 const http = require('http');
-const server = http.createServer(app);
 const { Server } = require('socket.io');
-const socketIO = new Server(server, {
+const connectDB = require('./config/db');
+const errorHandler = require('./utils/errorHandler');
+
+// Routes
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const workspaceRoutes = require('./routes/workspaceRoutes');
+const boardRoutes = require('./routes/boardRoutes');
+const listRoutes = require('./routes/listRoutes');
+const cardRoutes = require('./routes/cardRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+const searchRoutes = require('./routes/searchRoutes');
+const activityRoutes = require('./routes/activityRoutes');
+
+// Socket.IO handler
+const socketHandler = require('./socketHandler');
+
+dotenv.config();
+connectDB();
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5173', // Match frontend origin
+    methods: ['GET', 'POST'], // Allow necessary methods
+    credentials: true, // Allow cookies/auth tokens if needed
   },
+  path: '/socket.io/', // Ensure path matches client
 });
 
-const UID = () => Math.random().toString(36).substring(2, 10);
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(bodyParser.json());
 
-const tasks = {
-  pending: {
-    title: 'pending',
-    items: [
-      {
-        id: UID(),
-        title: 'Send the Figma file to Dima',
-        comments: [],
-      },
-    ],
-  },
-  ongoing: {
-    title: 'ongoing',
-    items: [
-      {
-        id: UID(),
-        title: 'Review GitHub issues',
-        comments: [
-          {
-            name: 'David',
-            text: 'Ensure you review before merging',
-            id: UID(),
-          },
-        ],
-      },
-    ],
-  },
-  completed: {
-    title: 'completed',
-    items: [
-      {
-        id: UID(),
-        title: 'Create technical contents',
-        comments: [
-          {
-            name: 'Dima',
-            text: 'Make sure you check the requirements',
-            id: UID(),
-          },
-        ],
-      },
-    ],
-  },
-};
-
-// API endpoint to fetch tasks
-app.get('/api', (req, res) => {
-  res.json(tasks);
+// Middleware to attach io to request object
+app.use((req, res, next) => {
+  req.io = io;
+  next();
 });
 
-// Socket.IO connection and task drag handler
-socketIO.on('connection', (socket) => {
-  console.log('A client connected:', socket.id);
+// Mount routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/workspaces', workspaceRoutes);
+app.use('/api/boards', boardRoutes);
+app.use('/api/lists', listRoutes);
+app.use('/api/cards', cardRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/activity', activityRoutes);
 
-  socket.on('taskDragged', ({ source, destination }) => {
-    // Validate source and destination
-    if (!tasks[source.droppableId] || !tasks[destination.droppableId]) {
-      console.error('Invalid source or destination column');
-      return;
-    }
+// Initialize Socket.IO
+socketHandler(io);
 
-    // Get the task from the source column
-    const sourceItems = [...tasks[source.droppableId].items];
-    const [movedTask] = sourceItems.splice(source.index, 1);
+app.use(errorHandler);
 
-    // If moving within the same column
-    if (source.droppableId === destination.droppableId) {
-      sourceItems.splice(destination.index, 0, movedTask);
-      tasks[source.droppableId].items = sourceItems;
-    } else {
-      // Move to a different column
-      const destinationItems = [...tasks[destination.droppableId].items];
-      destinationItems.splice(destination.index, 0, movedTask);
-      tasks[source.droppableId].items = sourceItems;
-      tasks[destination.droppableId].items = destinationItems;
-    }
-
-    // Broadcast updated tasks to all clients
-    socketIO.emit('tasks', tasks);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('A client disconnected:', socket.id);
-  });
-});
-
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-// const express = require('express');
-// const http = require('http');
-// const { Server } = require('socket.io');
-// const cors = require('cors');
-// const connectDB = require('./config/db');
-// const socketHandlers = require('./sockets/index');
-// const config = require('./config/config');
-// const errorHandler = require('./middleware/error');
-
-// const app = express();
-// app.use(errorHandler); // Add at the end of middleware chain
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: { origin: 'http://localhost:5173' },
-// });
-
-// const PORT = 5001;
-
-// // Connect DB
-// connectDB();
-
-// // Middleware
-// app.use(cors({ origin: 'http://localhost:5173' }));
-// app.use(express.json());
-
-// // Make io available to controllers
-// app.set('io', io);
-
-// // Routes
-// app.use('/api/users', require('./routes/userRoutes'));
-// app.use('/api/workspaces', require('./routes/workspaceRoutes'));
-// app.use('/api/boards', require('./routes/boardRoutes'));
-// app.use('/api/lists', require('./routes/listRoutes'));
-// app.use('/api/cards', require('./routes/cardRoutes'));
-// app.use('/api/comments', require('./routes/commentRoutes'));
-
-// // Legacy /api for basic tasks
-// app.get('/api', (req, res) => {
-//   res.json({ message: 'Use /api/boards/:id for tasks' });
-// });
-
-// // Socket.IO
-// socketHandlers(io);
-
-// server.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
-
-
+const PORT = process.env.PORT || 5001;
+server.listen(PORT, () => console.log(`Server running on port ${PORT} with WebSocket support`));
