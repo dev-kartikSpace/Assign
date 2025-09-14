@@ -58,7 +58,7 @@
 *Smooth and responsive drag-and-drop experience*
 
 <div align="center">
-  <img src="./dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <img src="./outputs/dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 👥 Team Collaboration
