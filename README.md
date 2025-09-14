@@ -1,11 +1,14 @@
 # Kanbanly 🚀
 
+<div align="center">
+
+![Kanbanly Logo](https://img.shields.io/badge/Kanbanly-Project%20Management-blue?style=for-the-badge&logo=trello&logoColor=white)
 
 **A sleek, real-time Kanban board app inspired by Trello**
 *Collaborate on workspaces, drag-and-drop cards, and track changes instantly*
 
-[![Demo Video](https://img.shields.io/badge/🎥_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=cemYD8L0RNs)
-[![Live Demo](https://img.shields.io/badge/🚀_Try-Live_Demo-blue?style=for-the-badge&logo=vercel)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
+[![Demo Demo](https://img.shields.io/badge/🚀_Try-Live_Demo-blue?style=for-the-badge&logo=vercel)](https://www.youtube.com/watch?v=cemYD8L0RNs)
+[![Drag-Drop Video](https://img.shields.io/badge/🎥_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=OMKPKcaUgqY)
 [![GitHub](https://img.shields.io/badge/⭐_Star-Repository-black?style=for-the-badge&logo=github)](https://github.com/dev-kartikSpace/Mini-Trello-App)
 
 </div>
@@ -44,28 +47,28 @@
 *Clean and intuitive landing page with modern design*
 
 <div align="center">
-  <img src="./homePage.png" alt="Kanbanly Home Page" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <img src="./client/src/assets/homePage.png" alt="Kanbanly Home Page" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 📋 Board Interface
 *Organized board layout with drag-and-drop functionality*
 
 <div align="center">
-  <img src="./board.png" alt="Kanban Board Interface" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <img src="./client/src/assets/board.png" alt="Kanban Board Interface" width="800" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 🖱️ Drag & Drop in Action
 *Smooth and responsive drag-and-drop experience*
 
 <div align="center">
-  <img src="./outputs/dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <img src="./client/src/assets/dragdrop.png" alt="Drag and Drop Feature" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ### 👥 Team Collaboration
 *Real-time collaboration with multiple users*
 
 <div align="center">
-  <img src="./collab.png" alt="Team Collaboration" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <img src="./client/src/assets/collab.png" alt="Team Collaboration" width="600" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
 </div>
 
 ---
